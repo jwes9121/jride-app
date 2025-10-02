@@ -1,5 +1,4 @@
-﻿
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 
@@ -39,10 +38,10 @@ export default function DistanceSurchargeModal({
 
   const getSurchargeText = (distance: number, surcharge: number) => {
     if (distance <= 1.5) return 'Free pickup within 1.5km';
-    if (distance <= 2.0) return `â‚±${surcharge} surcharge (1.5-2.0km)`;
-    if (distance <= 3.0) return `â‚±${surcharge} surcharge (2.1-3.0km)`;
-    if (distance <= 3.5) return `â‚±${surcharge} surcharge (3.1-3.5km)`;
-    if (distance <= 4.0) return `â‚±${surcharge} surcharge (3.6-4.0km)`;
+    if (distance <= 2.0) return `₱${surcharge} surcharge (1.5-2.0km)`;
+    if (distance <= 3.0) return `₱${surcharge} surcharge (2.1-3.0km)`;
+    if (distance <= 3.5) return `₱${surcharge} surcharge (3.1-3.5km)`;
+    if (distance <= 4.0) return `₱${surcharge} surcharge (3.6-4.0km)`;
     return 'Custom fare (>4km distance)';
   };
 
@@ -76,7 +75,7 @@ export default function DistanceSurchargeModal({
             
             <div className="flex items-center justify-between text-sm">
               <span className="text-gray-600">Base {serviceType} fare:</span>
-              <span className="font-medium">â‚±{distanceData.baseFare}</span>
+              <span className="font-medium">₱{distanceData.baseFare}</span>
             </div>
 
             {/* Show late night adjustments if applicable */}
@@ -88,15 +87,21 @@ export default function DistanceSurchargeModal({
                 
                 {distanceData.lateNightInfo.multiplier > 1 && (
                   <div className="flex justify-between items-center text-xs mb-1">
-                    <span className="text-purple-700">Double fare ({distanceData.lateNightInfo.multiplier}x):</span>
-                    <span className="font-medium text-purple-800">â‚±{30 * distanceData.lateNightInfo.multiplier}</span>
+                    <span className="text-purple-700">
+                      Double fare ({distanceData.lateNightInfo.multiplier}x):
+                    </span>
+                    <span className="font-medium text-purple-800">
+                      ₱{30 * distanceData.lateNightInfo.multiplier}
+                    </span>
                   </div>
                 )}
                 
                 {distanceData.lateNightInfo.premium > 0 && (
                   <div className="flex justify-between items-center text-xs">
                     <span className="text-purple-700">Night premium:</span>
-                    <span className="font-medium text-purple-800">+â‚±{distanceData.lateNightInfo.premium}</span>
+                    <span className="font-medium text-purple-800">
+                      +₱{distanceData.lateNightInfo.premium}
+                    </span>
                   </div>
                 )}
               </div>
@@ -105,7 +110,7 @@ export default function DistanceSurchargeModal({
             <div className="flex items-center justify-between text-sm">
               <span className="text-gray-600">Pickup fee:</span>
               <span className={`font-medium ${distanceData.surcharge === 0 ? 'text-green-600' : 'text-orange-600'}`}>
-                {distanceData.surcharge === 0 ? 'FREE' : `â‚±${distanceData.surcharge}`}
+                {distanceData.surcharge === 0 ? 'FREE' : `₱${distanceData.surcharge}`}
               </span>
             </div>
 
@@ -113,7 +118,7 @@ export default function DistanceSurchargeModal({
               <div className="flex items-center justify-between">
                 <span className="font-semibold">Total Fare:</span>
                 <span className="text-xl font-bold text-orange-600">
-                  â‚±{distanceData.isLongDistance ? distanceData.proposedFare : distanceData.totalFare}
+                  ₱{distanceData.isLongDistance ? distanceData.proposedFare : distanceData.totalFare}
                 </span>
               </div>
             </div>
@@ -137,7 +142,9 @@ export default function DistanceSurchargeModal({
                 distanceData.surcharge === 0 ? 'text-green-800' : 
                 'text-orange-800'
               }`}>
-                {distanceData.isLongDistance ? 'Long Distance Pickup' : getSurchargeText(distanceData.distance, distanceData.surcharge)}
+                {distanceData.isLongDistance
+                  ? 'Long Distance Pickup'
+                  : getSurchargeText(distanceData.distance, distanceData.surcharge)}
               </p>
               <p className={`text-xs mt-1 ${
                 distanceData.isLongDistance ? 'text-blue-700' :
@@ -145,7 +152,7 @@ export default function DistanceSurchargeModal({
                 'text-orange-700'
               }`}>
                 {distanceData.isLongDistance 
-                  ? `Driver ${distanceData.driverName || 'Unknown'} proposed â‚±${distanceData.proposedFare} for this ${distanceData.distance.toFixed(1)}km pickup distance`
+                  ? `Driver ${distanceData.driverName || 'Unknown'} proposed ₱${distanceData.proposedFare} for this ${distanceData.distance.toFixed(1)}km pickup distance`
                   : distanceData.surcharge === 0 
                     ? 'No additional charge for nearby pickup'
                     : 'Distance surcharge helps compensate driver for longer pickup trips'
@@ -180,8 +187,8 @@ export default function DistanceSurchargeModal({
             className="w-full bg-orange-500 text-white py-4 rounded-xl font-semibold hover:bg-orange-600 transition-colors disabled:opacity-50"
           >
             {loading ? 'Processing...' : 
-             distanceData.isLongDistance ? `Accept â‚±${distanceData.proposedFare}` : 
-             `Confirm â‚±${distanceData.totalFare}`}
+             distanceData.isLongDistance ? `Accept ₱${distanceData.proposedFare}` : 
+             `Confirm ₱${distanceData.totalFare}`}
           </button>
           
           <button
@@ -196,11 +203,10 @@ export default function DistanceSurchargeModal({
         <div className="mt-4 text-center">
           <p className="text-xs text-gray-500">
             {serviceType === 'ride' ? 'Ride' : 'Delivery'} fare includes pickup distance compensation
-            {distanceData.lateNightInfo?.isLateNight && &apos; and late night adjustments'}
+            {distanceData.lateNightInfo?.isLateNight && " and late night adjustments"}
           </p>
         </div>
       </div>
     </div>
   );
 }
-
