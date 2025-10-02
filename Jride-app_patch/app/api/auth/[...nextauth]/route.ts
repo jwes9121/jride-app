@@ -9,16 +9,13 @@ const handler = NextAuth({
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
-  debug: true,
+  debug: true, // enable debug logs
   callbacks: {
     async redirect({ url, baseUrl }) {
+      // Always redirect back to baseUrl (production or dev)
       return baseUrl;
     },
   },
 });
 
 export { handler as GET, handler as POST };
-
-
-
-
