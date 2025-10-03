@@ -1,31 +1,36 @@
-﻿"use client";
+﻿'use client';
 
-import React, { useState } from "react";
+import { useState } from "react";
 import Header from "@/components/Header";
-import AuthModal from "@/components/AuthModal";
 
 export default function VerificationPage() {
   const [showAuthModal, setShowAuthModal] = useState(false);
 
   return (
-    <div>
+    <div className="p-6">
       <Header title="User Verification" />
+
+      <h2 className="text-2xl font-bold mb-4">User Verification</h2>
 
       <button
         onClick={() => setShowAuthModal(true)}
-        className="px-4 py-2 bg-blue-600 text-white rounded-lg mt-4"
+        className="bg-blue-500 text-white px-4 py-2 rounded"
       >
-        Open Auth
+        Verify User
       </button>
 
       {showAuthModal && (
-        <AuthModal
-          isOpen={showAuthModal}
-          onClose={() => setShowAuthModal(false)}
-          onAuthSuccess={() => setShowAuthModal(false)}
-          mode="signin"
-        />
+        <div className="mt-4 p-4 border rounded bg-gray-50">
+          <p>Verification modal would appear here.</p>
+          <button
+            onClick={() => setShowAuthModal(false)}
+            className="mt-2 bg-gray-300 px-3 py-1 rounded"
+          >
+            Close
+          </button>
+        </div>
       )}
     </div>
   );
 }
+

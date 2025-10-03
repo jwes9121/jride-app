@@ -1,30 +1,13 @@
-"use client";
+interface HeaderProps {
+  title: string;
+}
 
-import { useState } from "react";
-import AuthModal from "./AuthModal";
-
-export default function Header() {
-  const [showAuthModal, setShowAuthModal] = useState(false);
-
+export default function Header({ title }: HeaderProps) {
   return (
-    <header className="flex items-center justify-between p-4 bg-white shadow">
-      <h1 className="text-lg font-bold">J-Ride</h1>
-
-      <button onClick={() => setShowAuthModal(true)} className="p-2">
-        <i className="ri-user-line text-xl"></i>
-      </button>
-
-      {showAuthModal && (
-        <AuthModal
-          isOpen={showAuthModal}
-          onClose={() => setShowAuthModal(false)}
-          onAuthSuccess={(user) => {
-            console.log("Logged in:", user);
-            setShowAuthModal(false);
-          }}
-          mode="signin"
-        />
-      )}
+    <header className="p-4 bg-gray-100 border-b">
+      <h1 className="text-xl font-bold">{title}</h1>
     </header>
   );
 }
+
+
