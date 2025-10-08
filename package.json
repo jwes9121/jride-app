@@ -1,8 +1,19 @@
 {
+  "name": "jride-app",
+  "version": "1.0.0",
+  "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build --no-lint",
     "start": "next start -p 3000",
-    "lint": "echo \"Lint is disabled in CI\""
+    "lint": "echo \"lint disabled in CI\""
+  },
+  "dependencies": {
+    "next": "14.2.5",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "@supabase/supabase-js": "^2.45.0",
+    "mapbox-gl": "^2.15.0"
   }
 }
+
