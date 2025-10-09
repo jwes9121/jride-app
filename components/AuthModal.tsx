@@ -1,28 +1,26 @@
 import React from "react";
 
-type Props = {
-  open?: boolean;
+type AuthModalProps = {
+  isOpen?: boolean;
   onClose?: () => void;
-  title?: string;
-  children?: React.ReactNode;
 };
 
-export default function AuthModal({ open, onClose, title, children }: Props) {
-  if (!open) return null;
+export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
+  if (!isOpen) return null;
   return (
     <div
-      className="fixed inset-0 bg-black/40 flex items-center justify-center p-4"
-      role="dialog"
-      aria-modal="true"
+      style={{
+        position: "fixed",
+        inset: 0,
+        background: "rgba(0,0,0,0.4)",
+        display: "grid",
+        placeItems: "center"
+      }}
+      onClick={onClose}
     >
-      <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-4">
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="text-lg font-semibold">{title ?? "Sign in"}</h2>
-          <button onClick={onClose} aria-label="Close">
-            ✕
-          </button>
-        </div>
-        <div className="text-sm text-gray-700">{children ?? "…"}</div>
+      <div style={{ background: "#fff", padding: 16, borderRadius: 8 }}>
+        <h3>Auth Modal (stub)</h3>
+        <button onClick={onClose}>Close</button>
       </div>
     </div>
   );
