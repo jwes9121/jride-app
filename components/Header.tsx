@@ -14,5 +14,3 @@ export default function Header({ title, className, children }: Props) {
     </header>
   );
 }
-
-
