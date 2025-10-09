@@ -9,11 +9,13 @@
     "lint": "echo \"lint disabled in CI\""
   },
   "dependencies": {
-    "next": "14.2.5",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
+    "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/supabase-js": "^2.45.0",
-    "mapbox-gl": "^2.15.0"
+    "mapbox-gl": "^2.15.0",
+    "next": "14.2.5",
+    "next-auth": "^4.24.6",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
   }
 }
 
