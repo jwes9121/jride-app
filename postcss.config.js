@@ -1,9 +1,12 @@
-/** @type {import('postcss-load-config').Config} */
-module.exports = {
-  plugins: {
-    tailwindcss: {},
-    autoprefixer: {},
-  },
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  experimental: {
+    // App Router (default in Next 14)
+  }
 };
+
+export default nextConfig;
+
 
 
