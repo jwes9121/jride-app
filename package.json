@@ -1,28 +1,30 @@
 {
   "name": "jride-app",
-  "version": "1.0.0",
   "private": true,
-  "engines": {
-    "node": ">=20.0.0"
-  },
   "scripts": {
     "dev": "next dev",
     "build": "next build --no-lint",
     "start": "next start -p 3000",
-    "lint": "echo \"lint disabled in CI\""
+    "postinstall": "next telemetry disable"
   },
   "dependencies": {
-    "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/supabase-js": "^2.45.0",
+    "autoprefixer": "^10.4.18",
     "mapbox-gl": "^2.15.0",
     "next": "14.2.5",
-    "next-auth": "^4.24.6",
+    "next-auth": "^5.0.0",
+    "postcss": "^8.4.35",
     "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "react-dom": "18.3.1",
+    "tailwindcss": "^3.4.10"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.20",
-    "postcss": "^8.4.47",
-    "tailwindcss": "^3.4.14"
+    "@types/node": "^20.11.30",
+    "@types/react": "^18.2.66",
+    "@types/react-dom": "^18.2.22",
+    "typescript": "^5.4.5"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }
