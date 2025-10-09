@@ -1,16 +1,9 @@
-import React from "react";
+import React, { PropsWithChildren } from "react";
 
-type Props = {
-  title?: string;
-  className?: string;
-  children?: React.ReactNode;
-};
-
-export default function Header({ title, className, children }: Props) {
+export default function Header({ children }: PropsWithChildren) {
   return (
-    <header className={className ?? ""}>
-      {title ? <h1 className="text-xl font-semibold">{title}</h1> : null}
-      {children}
+    <header style={{ padding: 12, borderBottom: "1px solid #eee", fontWeight: 600 }}>
+      {children ?? "Header (stub)"}
     </header>
   );
 }
