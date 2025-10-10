@@ -5,9 +5,8 @@ import BottomNavigation, { TabItem } from "@/components/BottomNavigation";
 
 export default function DeliveryPage() {
   const [activeTab, setActiveTab] = useState("Deliveries");
-  const town = "Kiangan"; // Later dynamically pulled from Supabase
+  const town = "Kiangan";
 
-  // ✅ Must be array of objects, not strings
   const tabs: TabItem[] = [
     { key: "rides", label: "Rides" },
     { key: "delivery", label: "Deliveries" },
