@@ -1,53 +1,62 @@
-'use client';
+"use client";
 
-import React, { useMemo } from 'react';
+import React, { Dispatch, SetStateAction } from "react";
+import {
+  Home,
+  Package,
+  ShoppingBag,
+  MapPin,
+  User,
+} from "lucide-react";
 
-type TabItem = string | { key: string; label: string };
-
-type BottomNavigationProps = {
-  /** Tabs can be simple strings or { key, label } objects */
-  tabs: TabItem[];
-  /** Currently active tab key */
+interface BottomNavigationProps {
+  tabs: string[];
   activeTab: string;
-  /** Setter to change active tab */
-  setActiveTab: (key: string) => void;
-  className?: string;
-};
+  setActiveTab: Dispatch<SetStateAction<string>>;
+  town?: string; // optional: for dynamic color theming (e.g., Lagawe, Kiangan)
+}
 
 export default function BottomNavigation({
   tabs,
   activeTab,
   setActiveTab,
-  className,
+  town = "Lagawe", // default
 }: BottomNavigationProps) {
-  // normalize to objects: { key, label }
-  const items = useMemo(
-    () =>
-      tabs.map((t) =>
-        typeof t === 'string' ? { key: t, label: t } : t
-      ),
-    [tabs]
-  );
+  // Town color legend
+  const townColors: Record<string, string> = {
+    Lagawe: "text-[#800000]", // maroon
+    Kiangan: "text-[#008000]", // green
+    Banaue: "text-[#0066cc]", // blue
+    Lamut: "text-[#ff6600]", // orange
+    Hingyon: "text-[#800080]", // purple
+  };
+
+  const activeColor = townColors[town] || "text-blue-600";
+
+  const icons: Record<string, JSX.Element> = {
+    Rides: <Home size={22} />,
+    Deliveries: <Package size={22} />,
+    Errands: <ShoppingBag size={22} />,
+    Map: <MapPin size={22} />,
+    Profile: <User size={22} />,
+  };
 
   return (
-    <nav className={className}>
-      <ul className="flex gap-2">
-        {items.map((t) => (
-          <li key={t.key}>
-            <button
-              type="button"
-              onClick={() => setActiveTab(t.key)}
-              className={`px-3 py-1 rounded ${
-                activeTab === t.key
-                  ? 'bg-black text-white'
-                  : 'bg-gray-200 text-gray-900'
-              }`}
-            >
-              {t.label}
-            </button>
-          </li>
-        ))}
-      </ul>
+    <nav className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 shadow-md flex justify-around py-2 z-50">
+      {tabs.map((tab) => (
+        <button
+          key={tab}
+          onClick={() => setActiveTab(tab)}
+          className={`flex flex-col items-center text-xs font-medium transition-colors duration-150 ${
+            activeTab === tab
+              ? `${activeColor}`
+              : "text-gray-500 hover:text-gray-700"
+          }`}
+        >
+          {icons[tab] ?? <Home size={22} />}
+          <span className="mt-1">{tab}</span>
+        </button>
+      ))}
     </nav>
   );
 }
