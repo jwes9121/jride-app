@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import BottomNavigation from "@/components/BottomNavigation";
+import BottomNavigation, { TabItem } from "@/components/BottomNavigation";
 
 export default function AdminPage() {
   const [activeTab, setActiveTab] = useState("Admin");
-  const town = "Lagawe"; // Later from Supabase (drivers table)
+  const town = "Lagawe";
 
-  const TABS = [
+  const TABS: TabItem[] = [
     { key: "rides", label: "Rides" },
     { key: "delivery", label: "Deliveries" },
     { key: "errands", label: "Errands" },
