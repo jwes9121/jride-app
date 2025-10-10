@@ -1,31 +1,51 @@
-import React from "react";
+'use client';
+import * as React from 'react';
 
-type Item = { label: string; href?: string; onClick?: () => void };
-
-type Props = {
-  items?: Item[];
+export type BottomNavigationProps = {
+  /** The currently active tab key */
+  activeTab: string;
+  /** React state setter provided by the parent */
+  setActiveTab: React.Dispatch<React.SetStateAction<string>>;
+  /** Optional list of tabs to render (keys/labels) */
+  tabs?: Array<{ key: string; label?: string }>;
+  /** Optional className to style the container */
   className?: string;
 };
 
-export default function BottomNavigation({ items = [], className }: Props) {
+const DEFAULT_TABS: Array<{ key: string; label?: string }> = [
+  { key: 'overview', label: 'Overview' },
+  { key: 'rides', label: 'Rides' },
+  { key: 'drivers', label: 'Drivers' },
+  { key: 'landmarks', label: 'Landmarks' },
+];
+
+const BottomNavigation: React.FC<BottomNavigationProps> = ({
+  activeTab,
+  setActiveTab,
+  tabs = DEFAULT_TABS,
+  className,
+}) => {
   return (
-    <nav
-      className={
-        className ??
-        "fixed bottom-0 left-0 right-0 bg-white/90 border-t border-gray-200 px-4 py-2 flex gap-4 justify-center"
-      }
-    >
-      {items.map((it, i) =>
-        it.href ? (
-          <a key={i} href={it.href} className="text-sm hover:underline">
-            {it.label}
-          </a>
-        ) : (
-          <button key={i} onClick={it.onClick} className="text-sm underline">
-            {it.label}
+    <nav className={className ?? 'flex gap-2 p-2'}>
+      {tabs.map(({ key, label }) => {
+        const isActive = key === activeTab;
+        return (
+          <button
+            key={key}
+            type="button"
+            onClick={() => setActiveTab(key)}
+            className={[
+              'px-3 py-1 rounded text-sm capitalize transition-colors',
+              isActive ? 'bg-black text-white' : 'bg-gray-200 text-gray-900 hover:bg-gray-300',
+            ].join(' ')}
+            aria-current={isActive ? 'page' : undefined}
+          >
+            {label ?? key}
           </button>
-        )
-      )}
+        );
+      })}
     </nav>
   );
-}
+};
+
+export default BottomNavigation;
