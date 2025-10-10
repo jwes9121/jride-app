@@ -31,7 +31,6 @@ export default function BottomNavigation({
     Lamut: "text-[#ff6600]",
     Hingyon: "text-[#800080]",
   };
-
   const activeColor = townColors[town] || "text-blue-600";
 
   const icons: Record<string, JSX.Element> = {
@@ -54,9 +53,7 @@ export default function BottomNavigation({
           key={tab.key}
           onClick={() => handleTabClick(tab)}
           className={`flex flex-col items-center text-xs font-medium transition-colors duration-150 ${
-            activeTab === tab.label
-              ? `${activeColor}`
-              : "text-gray-500 hover:text-gray-700"
+            activeTab === tab.label ? `${activeColor}` : "text-gray-500 hover:text-gray-700"
           }`}
         >
           {icons[tab.key] ?? <Home size={22} />}
