@@ -6,10 +6,10 @@ import BottomNavigation from "@/components/BottomNavigation";
 export default function DeliveryPage() {
   const [activeTab, setActiveTab] = useState("Deliveries");
 
-  // Define the tabs shown in the bottom navigation bar
+  // 👇 Define your tabs array
   const tabs = ["Rides", "Deliveries", "Errands", "Map", "Profile"];
 
-  // Active town (this can later be dynamically pulled from Supabase user_town column)
+  // 👇 Define the current town (used for color theming)
   const town = "Lagawe";
 
   return (
@@ -24,6 +24,7 @@ export default function DeliveryPage() {
         {/* Add delivery listing, filters, or active delivery cards here */}
       </main>
 
+      {/* 👇 Pass the tabs prop here */}
       <BottomNavigation
         tabs={tabs}
         activeTab={activeTab}
