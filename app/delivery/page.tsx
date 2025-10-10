@@ -7,7 +7,7 @@ export default function DeliveryPage() {
   const [activeTab, setActiveTab] = useState("Deliveries");
   const town = "Kiangan";
 
-  // IMPORTANT: explicit type annotation forces object array
+  // Use object-based tabs so routing + typing are consistent
   const tabs: TabItem[] = [
     { key: "rides",    label: "Rides" },
     { key: "delivery", label: "Deliveries" },
