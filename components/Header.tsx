@@ -1,9 +1,20 @@
-import React, { PropsWithChildren } from "react";
+// components/Header.tsx
+import * as React from "react";
 
-export default function Header({ children }: PropsWithChildren) {
+/**
+ * Header component that accepts a `title` prop (for pages that call <Header title="..." />)
+ * and optionally renders children underneath the title.
+ */
+type HeaderProps = {
+  title: string;
+  children?: React.ReactNode;
+};
+
+export default function Header({ title, children }: HeaderProps) {
   return (
-    <header style={{ padding: 12, borderBottom: "1px solid #eee", fontWeight: 600 }}>
-      {children ?? "Header (stub)"}
+    <header className="mb-4">
+      <h1 className="text-3xl font-bold">{title}</h1>
+      {children ? <div className="mt-2">{children}</div> : null}
     </header>
   );
 }
