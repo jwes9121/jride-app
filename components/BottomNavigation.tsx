@@ -24,18 +24,16 @@ export default function BottomNavigation({
 }: BottomNavigationProps) {
   const router = useRouter();
 
-  // Color per town
   const townColors: Record<string, string> = {
-    Lagawe: "text-[#800000]", // maroon
-    Kiangan: "text-[#008000]", // green
-    Banaue: "text-[#0066cc]", // blue
-    Lamut: "text-[#ff6600]", // orange
-    Hingyon: "text-[#800080]", // purple
+    Lagawe: "text-[#800000]",
+    Kiangan: "text-[#008000]",
+    Banaue: "text-[#0066cc]",
+    Lamut: "text-[#ff6600]",
+    Hingyon: "text-[#800080]",
   };
 
   const activeColor = townColors[town] || "text-blue-600";
 
-  // Icons for each tab
   const icons: Record<string, JSX.Element> = {
     rides: <Home size={22} />,
     delivery: <Package size={22} />,
@@ -44,7 +42,6 @@ export default function BottomNavigation({
     profile: <User size={22} />,
   };
 
-  // Handle tab click + route
   const handleTabClick = (tab: TabItem) => {
     setActiveTab(tab.label);
     router.push(`/${tab.key}`);
