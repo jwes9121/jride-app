@@ -1,33 +1,34 @@
 'use client';
 
-import * as React from 'react';
+import React, { useState } from 'react';
 import BottomNavigation from '@/components/BottomNavigation';
 
+const TABS: { key: string; label: string }[] = [
+  { key: 'overview',  label: 'Overview'  },
+  { key: 'rides',     label: 'Rides'     },
+  { key: 'drivers',   label: 'Drivers'   },
+  { key: 'landmarks', label: 'Landmarks' },
+];
+
 export default function AdminPage() {
-  const [activeTab, setActiveTab] = React.useState<string>('overview');
+  const [activeTab, setActiveTab] = useState<string>('overview');
 
   return (
-    <main className="p-4">
-      <h1 className="text-xl font-bold mb-4">Admin Dashboard</h1>
+    <div className="p-4">
+      <h1 className="text-xl font-bold">Admin Dashboard</h1>
 
       <BottomNavigation
+        tabs={TABS}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
-        // Optional: override the tabs shown in the nav
-        tabs={[
-          { key: 'overview', label: 'Overview' },
-          { key: 'rides', label: 'Rides' },
-          { key: 'drivers', label: 'Drivers' },
-          { key: 'landmarks', label: 'Landmarks' },
-        ]}
+        className="my-4"
       />
 
-      <section className="mt-6">
-        {activeTab === 'overview' && <div>Overview content…</div>}
-        {activeTab === 'rides' && <div>Rides content…</div>}
-        {activeTab === 'drivers' && <div>Drivers content…</div>}
-        {activeTab === 'landmarks' && <div>Landmarks content…</div>}
-      </section>
-    </main>
+      {/* Example conditional content */}
+      {activeTab === 'overview'  && <div>Overview content</div>}
+      {activeTab === 'rides'     && <div>Rides content</div>}
+      {activeTab === 'drivers'   && <div>Drivers content</div>}
+      {activeTab === 'landmarks' && <div>Landmarks content</div>}
+    </div>
   );
 }
