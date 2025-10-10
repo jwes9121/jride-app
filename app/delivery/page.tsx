@@ -7,7 +7,8 @@ export default function DeliveryPage() {
   const [activeTab, setActiveTab] = useState("Deliveries");
   const town = "Kiangan";
 
-  const TABS: TabItem[] = [
+  // ✅ Must be array of objects, not strings
+  const tabs: TabItem[] = [
     { key: "rides", label: "Rides" },
     { key: "delivery", label: "Deliveries" },
     { key: "errands", label: "Errands" },
@@ -27,7 +28,7 @@ export default function DeliveryPage() {
       </main>
 
       <BottomNavigation
-        tabs={TABS}
+        tabs={tabs}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         town={town}
