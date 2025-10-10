@@ -5,9 +5,8 @@ import BottomNavigation from "@/components/BottomNavigation";
 
 export default function AdminPage() {
   const [activeTab, setActiveTab] = useState("Admin");
-  const town = "Lagawe"; // dynamic later via Supabase user table
+  const town = "Lagawe"; // Later from Supabase (drivers table)
 
-  // Define object-based tabs for routing
   const TABS = [
     { key: "rides", label: "Rides" },
     { key: "delivery", label: "Deliveries" },
