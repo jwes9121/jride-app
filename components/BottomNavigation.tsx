@@ -1,18 +1,17 @@
 "use client";
 
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
 import { useRouter } from "next/navigation";
 import { Home, Package, ShoppingBag, MapPin, User } from "lucide-react";
 
-export interface TabItem {
-  key: string;
-  label: string;
-}
+// Accept BOTH formats: ["Rides", ...] OR [{ key:"delivery", label:"Deliveries" }, ...]
+type TabItem = { key: string; label: string };
+type TabsProp = Array<string | TabItem>;
 
 interface BottomNavigationProps {
-  tabs: TabItem[];
+  tabs: TabsProp;
   activeTab: string;
-  setActiveTab: Dispatch<SetStateAction<string>>;
+  setActiveTab: React.Dispatch<React.SetStateAction<string>>;
   town?: string;
 }
 
@@ -23,6 +22,19 @@ export default function BottomNavigation({
   town = "Lagawe",
 }: BottomNavigationProps) {
   const router = useRouter();
+
+  // normalize to objects so callers can pass strings OR objects
+  const normalized: TabItem[] = tabs.map((t) => {
+    if (typeof t === "string") {
+      const key = t.trim().toLowerCase().replace(/\s+/g, "");
+      return { key, label: t };
+    }
+    // ensure key is a safe path segment
+    return {
+      key: t.key.trim().toLowerCase().replace(/\s+/g, ""),
+      label: t.label,
+    };
+  });
 
   const townColors: Record<string, string> = {
     Lagawe: "text-[#800000]",
@@ -36,24 +48,25 @@ export default function BottomNavigation({
   const icons: Record<string, JSX.Element> = {
     rides: <Home size={22} />,
     delivery: <Package size={22} />,
+    deliveries: <Package size={22} />, // tolerant alias
     errands: <ShoppingBag size={22} />,
     map: <MapPin size={22} />,
     profile: <User size={22} />,
   };
 
-  const handleTabClick = (tab: TabItem) => {
+  const handleClick = (tab: TabItem) => {
     setActiveTab(tab.label);
     router.push(`/${tab.key}`);
   };
 
   return (
     <nav className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 shadow-md flex justify-around py-2 z-50">
-      {tabs.map((tab) => (
+      {normalized.map((tab) => (
         <button
           key={tab.key}
-          onClick={() => handleTabClick(tab)}
+          onClick={() => handleClick(tab)}
           className={`flex flex-col items-center text-xs font-medium transition-colors duration-150 ${
-            activeTab === tab.label ? `${activeColor}` : "text-gray-500 hover:text-gray-700"
+            activeTab === tab.label ? activeColor : "text-gray-500 hover:text-gray-700"
           }`}
         >
           {icons[tab.key] ?? <Home size={22} />}
