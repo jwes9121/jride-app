@@ -1,14 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
-import BottomNavigation, { TabItem } from "@/components/BottomNavigation";
+import BottomNavigation from "@/components/BottomNavigation";
 
 export default function DeliveryPage() {
   const [activeTab, setActiveTab] = useState("Deliveries");
   const town = "Kiangan";
 
-  // Use object-based tabs so routing + typing are consistent
-  const tabs: TabItem[] = [
+  // No TabItem import; just plain objects
+  const NAV_TABS = [
     { key: "rides",    label: "Rides" },
     { key: "delivery", label: "Deliveries" },
     { key: "errands",  label: "Errands" },
@@ -24,7 +24,7 @@ export default function DeliveryPage() {
       </main>
 
       <BottomNavigation
-        tabs={tabs}
+        tabs={NAV_TABS}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         town={town}
