@@ -4,7 +4,7 @@ import React, { Dispatch, SetStateAction } from "react";
 import { useRouter } from "next/navigation";
 import { Home, Package, ShoppingBag, MapPin, User } from "lucide-react";
 
-interface TabItem {
+export interface TabItem {
   key: string;
   label: string;
 }
