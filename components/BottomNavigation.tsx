@@ -2,13 +2,7 @@
 
 import React, { Dispatch, SetStateAction } from "react";
 import { useRouter } from "next/navigation";
-import {
-  Home,
-  Package,
-  ShoppingBag,
-  MapPin,
-  User,
-} from "lucide-react";
+import { Home, Package, ShoppingBag, MapPin, User } from "lucide-react";
 
 interface TabItem {
   key: string;
@@ -30,7 +24,7 @@ export default function BottomNavigation({
 }: BottomNavigationProps) {
   const router = useRouter();
 
-  // Town color mapping
+  // Color per town
   const townColors: Record<string, string> = {
     Lagawe: "text-[#800000]", // maroon
     Kiangan: "text-[#008000]", // green
@@ -41,7 +35,7 @@ export default function BottomNavigation({
 
   const activeColor = townColors[town] || "text-blue-600";
 
-  // Icon mapping
+  // Icons for each tab
   const icons: Record<string, JSX.Element> = {
     rides: <Home size={22} />,
     delivery: <Package size={22} />,
@@ -50,13 +44,10 @@ export default function BottomNavigation({
     profile: <User size={22} />,
   };
 
-  // Handle tab click
+  // Handle tab click + route
   const handleTabClick = (tab: TabItem) => {
     setActiveTab(tab.label);
-
-    // Navigate to page if it exists
-    const path = `/${tab.key}`;
-    router.push(path);
+    router.push(`/${tab.key}`);
   };
 
   return (
