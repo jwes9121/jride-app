@@ -7,7 +7,7 @@ export default function DispatcherPage() {
   const [activeTab, setActiveTab] = useState("Dispatcher");
   const town = "Lagawe";
 
-  // object-based tabs (works with our BottomNavigation)
+  // Explicit tabs so it works regardless of component typing
   const NAV_TABS = [
     { key: "rides",    label: "Rides" },
     { key: "delivery", label: "Deliveries" },
@@ -19,8 +19,12 @@ export default function DispatcherPage() {
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       <main className="flex-1 p-4 pb-16">
-        <h1 className="text-xl font-semibold mb-4 text-gray-800">Dispatcher Dashboard</h1>
-        <p className="text-gray-600">Manage live trips, assign drivers, and monitor queues.</p>
+        <h1 className="text-xl font-semibold mb-4 text-gray-800">
+          Dispatcher Dashboard
+        </h1>
+        <p className="text-gray-600">
+          Manage live trips, assign drivers, and monitor queues.
+        </p>
       </main>
 
       <BottomNavigation
