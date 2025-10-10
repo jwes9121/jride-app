@@ -1,16 +1,19 @@
 "use client";
 
 import React, { useState } from "react";
-import BottomNavigation from "@/components/BottomNavigation";
+import BottomNavigation, { TabItem } from "@/components/BottomNavigation";
 
 export default function DeliveryPage() {
   const [activeTab, setActiveTab] = useState("Deliveries");
+  const town = "Kiangan";
 
-  // 👇 Define your tabs array
-  const tabs = ["Rides", "Deliveries", "Errands", "Map", "Profile"];
-
-  // 👇 Define the current town (used for color theming)
-  const town = "Lagawe";
+  const TABS: TabItem[] = [
+    { key: "rides", label: "Rides" },
+    { key: "delivery", label: "Deliveries" },
+    { key: "errands", label: "Errands" },
+    { key: "map", label: "Map" },
+    { key: "profile", label: "Profile" },
+  ];
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
@@ -21,12 +24,10 @@ export default function DeliveryPage() {
         <p className="text-gray-600">
           Manage and track all delivery activities within {town}.
         </p>
-        {/* Add delivery listing, filters, or active delivery cards here */}
       </main>
 
-      {/* 👇 Pass the tabs prop here */}
       <BottomNavigation
-        tabs={tabs}
+        tabs={TABS}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         town={town}
