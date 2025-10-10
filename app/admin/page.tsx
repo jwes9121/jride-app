@@ -1,34 +1,38 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import BottomNavigation from '@/components/BottomNavigation';
-
-const TABS: { key: string; label: string }[] = [
-  { key: 'overview',  label: 'Overview'  },
-  { key: 'rides',     label: 'Rides'     },
-  { key: 'drivers',   label: 'Drivers'   },
-  { key: 'landmarks', label: 'Landmarks' },
-];
+import React, { useState } from "react";
+import BottomNavigation from "@/components/BottomNavigation";
 
 export default function AdminPage() {
-  const [activeTab, setActiveTab] = useState<string>('overview');
+  const [activeTab, setActiveTab] = useState("Admin");
+  const town = "Lagawe"; // dynamic later via Supabase user table
+
+  // Define object-based tabs for routing
+  const TABS = [
+    { key: "rides", label: "Rides" },
+    { key: "delivery", label: "Deliveries" },
+    { key: "errands", label: "Errands" },
+    { key: "map", label: "Map" },
+    { key: "profile", label: "Profile" },
+  ];
 
   return (
-    <div className="p-4">
-      <h1 className="text-xl font-bold">Admin Dashboard</h1>
+    <div className="flex flex-col min-h-screen bg-gray-50">
+      <main className="flex-1 p-4 pb-16">
+        <h1 className="text-xl font-semibold mb-4 text-gray-800">
+          Admin Dashboard
+        </h1>
+        <p className="text-gray-600">
+          Manage trips, drivers, and deliveries for {town}.
+        </p>
+      </main>
 
       <BottomNavigation
         tabs={TABS}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
-        className="my-4"
+        town={town}
       />
-
-      {/* Example conditional content */}
-      {activeTab === 'overview'  && <div>Overview content</div>}
-      {activeTab === 'rides'     && <div>Rides content</div>}
-      {activeTab === 'drivers'   && <div>Drivers content</div>}
-      {activeTab === 'landmarks' && <div>Landmarks content</div>}
     </div>
   );
 }
