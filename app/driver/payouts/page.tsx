@@ -1,27 +1,30 @@
-﻿"use client";
+"use client";
 
 import React, { useState } from "react";
-import BottomNavigation from "@/components/BottomNavigation";
 import AuthModal from "@/components/AuthModal";
 
 export default function DriverPayoutsPage() {
-  const [activeTab, setActiveTab] = useState("payouts");
   const [showAuthModal, setShowAuthModal] = useState(false);
 
   return (
-    <div>
-      <h1 className="text-xl font-bold p-4">Driver Payouts</h1>
+    <div className="flex min-h-screen flex-col bg-gray-50">
+      <main className="flex-1 p-4">
+        <h1 className="mb-4 text-xl font-semibold text-gray-800">Driver Payouts</h1>
 
-      <BottomNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
+        <button
+          className="rounded-md border px-3 py-2 text-sm"
+          onClick={() => setShowAuthModal(true)}
+        >
+          Sign in to continue
+        </button>
+      </main>
 
-      {showAuthModal && (
-        <AuthModal
-          isOpen={showAuthModal}
-          onClose={() => setShowAuthModal(false)}
-          onAuthSuccess={() => setShowAuthModal(false)}
-          mode="signin"
-        />
-      )}
+      {/* ⬇︎ No `onAuthSuccess` here (it’s not in the component’s props) */}
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+        mode="signin"
+      />
     </div>
   );
 }
