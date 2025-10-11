@@ -611,14 +611,26 @@ export default function TricycleRideSharePage() {
         </div>
       )}
 
-      {/* Ride Share Confirmation Modal */}
-      <RideShareConfirmationModal
-        isOpen={showConfirmationModal}
-        onClose={() => setShowConfirmationModal(false)}
-        ride={selectedRide}
-        pendingPassenger={pendingShareRequest}
-        onConfirm={handleRideShareDecision}
-      />
+     {/* Ride Share Confirmation Modal */}
+<RideShareConfirmationModal
+  isOpen={showConfirmationModal}
+  onClose={() => setShowConfirmationModal(false)}
+  ride={selectedRide}
+  pendingPassenger={pendingShareRequest}
+
+  /* ⬇️ Add the 4 required props with safe fallbacks */
+  driverName={selectedRide?.driverName ?? selectedRide?.driver?.name ?? "Driver"}
+  pickupLocation={selectedRide?.pickup?.address ?? selectedRide?.pickupLocation ?? "Pickup location"}
+  dropoffLocation={selectedRide?.dropoff?.address ?? selectedRide?.dropoffLocation ?? "Dropoff location"}
+  fare={Number((selectedRide as any)?.fare ?? 0)}
+
+  onConfirm={(accepted) => {
+    if (!selectedRide?.id) return;
+    handleRideShareDecision(selectedRide.id, accepted)
+      .catch(err => console.error("Ride-share decision failed:", err));
+  }}
+/>
+
 
       <BottomNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
     </div>
