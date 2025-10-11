@@ -118,9 +118,13 @@ export default function CashOutPage() {
         // Update user balance safely (user is User | null)
 setUser((prev) => {
   if (!prev) return prev; // nothing to update
-  const updated: typeof prev = { ...prev, wallet_balance: data.new_balance as number };
+  const updated = { ...prev, wallet_balance: Number(data.new_balance ?? prev.wallet_balance) };
   try {
     localStorage.setItem('j-ride-user', JSON.stringify(updated));
+  } catch {}
+  return updated;
+});
+
   } catch {}
   return updated;
 });
