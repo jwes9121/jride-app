@@ -19,12 +19,13 @@ export default function DriverPayoutsPage() {
         </button>
       </main>
 
-      {/* ⬇︎ No `onAuthSuccess` here (it’s not in the component’s props) */}
-      <AuthModal
-        isOpen={showAuthModal}
-        onClose={() => setShowAuthModal(false)}
-        mode="signin"
-      />
+      {showAuthModal && (
+        <AuthModal
+          isOpen={showAuthModal}
+          onClose={() => setShowAuthModal(false)}
+          mode="signin"
+        />
+      )}
     </div>
   );
 }
