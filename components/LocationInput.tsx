@@ -1,93 +1,137 @@
-'use client';
+"use client";
 
-import { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useState } from "react";
 
-export type LocationValue = {
+export type GeoLocation = {
   address: string;
-  lat: number;
-  lng: number;
+  lat?: number | null;
+  lng?: number | null;
+  // you can stash any provider payload here if you use Mapbox/Google
+  raw?: any;
 };
 
-type LocationInputProps = {
-  placeholder: string;
+export type LocationInputProps = {
+  label: string;
   value: string;
-  onChange: (loc: LocationValue) => void;
-  label?: string;
-  icon?: string;      // optional for your UI
-  iconColor?: string; // optional for your UI
+  placeholder?: string;
+  icon?: string;        // e.g. remix icon class
+  iconColor?: string;   // tailwind color name
+  /**
+   * Called when the user selects a concrete location (from suggestions or confirm)
+   */
+  onLocationSelect?: (location: GeoLocation) => void;
+  /**
+   * Called on text change while typing
+   */
+  onChange?: (value: string) => void;
+  /**
+   * Optional: disable manual typing; only allow selection from suggestions
+   */
+  readOnly?: boolean;
+  /**
+   * Optional: render a footer below suggestions (e.g., “powered by …”)
+   */
+  footer?: React.ReactNode;
 };
-
-const STATIC_PLACES: Array<LocationValue & { tag?: string }> = [
-  { address: 'Provincial Capitol, Lagawe', lat: 16.7800, lng: 121.1200, tag: 'landmark' },
-  { address: 'Ifugao State University, Lagawe', lat: 16.7820, lng: 121.1180, tag: 'landmark' },
-  { address: 'Lagawe Public Market', lat: 16.7790, lng: 121.1210, tag: 'market' },
-];
 
 export default function LocationInput({
-  placeholder,
-  value,
-  onChange,
   label,
+  value,
+  placeholder = "Search address…",
+  icon,
+  iconColor = "gray",
+  onLocationSelect,
+  onChange,
+  readOnly,
+  footer,
 }: LocationInputProps) {
-  const [input, setInput] = useState(value);
+  const [query, setQuery] = useState(value ?? "");
   const [open, setOpen] = useState(false);
-  const [filtered, setFiltered] = useState<typeof STATIC_PLACES>([]);
-  const wrapRef = useRef<HTMLDivElement>(null);
+  const suggestions = useMemo(() => {
+    // NOTE: replace with your Mapbox/Google results
+    // For now we just echo the typed query.
+    if (!query?.trim()) return [];
+    return [
+      { address: query, lat: null, lng: null } as GeoLocation,
+    ];
+  }, [query]);
 
-  useEffect(() => setInput(value), [value]);
+  const handleInput = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const v = e.target.value;
+      setQuery(v);
+      onChange?.(v);
+      setOpen(!!v);
+    },
+    [onChange]
+  );
 
-  useEffect(() => {
-    const clickAway = (e: MouseEvent) => {
-      if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', clickAway);
-    return () => document.removeEventListener('mousedown', clickAway);
-  }, []);
-
-  const onInput = (v: string) => {
-    setInput(v);
-    if (!v) {
-      setFiltered([]);
+  const selectLocation = useCallback(
+    (loc: GeoLocation) => {
+      setQuery(loc.address);
       setOpen(false);
-      return;
-    }
-    const f = STATIC_PLACES.filter(p => p.address.toLowerCase().includes(v.toLowerCase())).slice(0, 8);
-    setFiltered(f);
-    setOpen(f.length > 0);
-  };
+      onLocationSelect?.(loc);
+    },
+    [onLocationSelect]
+  );
 
-  const choose = (loc: LocationValue) => {
-    setInput(loc.address);
-    setOpen(false);
-    onChange(loc);
-  };
+  const confirmEnter = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        const loc: GeoLocation = { address: query };
+        selectLocation(loc);
+      }
+    },
+    [query, selectLocation]
+  );
 
   return (
-    <div ref={wrapRef} className="w-full">
-      {label && <div className="text-sm font-medium mb-1">{label}</div>}
-      <input
-        value={input}
-        onChange={(e) => onInput(e.target.value)}
-        onFocus={() => filtered.length && setOpen(true)}
-        placeholder={placeholder}
-        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-      {open && filtered.length > 0 && (
-        <div className="mt-1 max-h-60 overflow-auto rounded-xl border border-gray-200 bg-white shadow">
-          {filtered.map((p) => (
-            <button
-              key={p.address}
-              className="w-full text-left px-4 py-3 hover:bg-gray-50"
-              onClick={() => choose(p)}
-            >
-              <div className="font-medium">{p.address}</div>
-              <div className="text-xs text-gray-500">{p.tag || 'place'}</div>
-            </button>
-          ))}
-        </div>
-      )}
+    <div className="space-y-1">
+      <label className="block text-sm font-medium text-gray-700">
+        {label}
+      </label>
+
+      <div className="relative">
+        <input
+          type="text"
+          className="w-full rounded-md border px-3 py-2 text-sm outline-none focus:ring"
+          value={query}
+          onChange={handleInput}
+          onKeyDown={confirmEnter}
+          onFocus={() => setOpen(!!query)}
+          readOnly={readOnly}
+          placeholder={placeholder}
+        />
+
+        {icon ? (
+          <i
+            className={`absolute right-2 top-1/2 -translate-y-1/2 ${icon} text-${iconColor}-500`}
+            aria-hidden
+          />
+        ) : null}
+
+        {open && suggestions.length > 0 && (
+          <div className="absolute z-10 mt-1 w-full overflow-hidden rounded-md border bg-white shadow">
+            <ul className="max-h-56 overflow-auto text-sm">
+              {suggestions.map((s, i) => (
+                <li
+                  key={i}
+                  className="cursor-pointer px-3 py-2 hover:bg-gray-50"
+                  onMouseDown={(e) => {
+                    // onMouseDown so input doesn’t lose focus before click fires
+                    e.preventDefault();
+                    selectLocation(s);
+                  }}
+                >
+                  {s.address}
+                </li>
+              ))}
+            </ul>
+            {footer ? <div className="border-t px-3 py-2 text-xs text-gray-500">{footer}</div> : null}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
