@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 
 export type AuthMode = "signin" | "signup";
@@ -8,21 +7,20 @@ export interface AuthModalProps {
   isOpen: boolean;
   onClose: () => void;
   mode?: AuthMode;
-  /** Optional callback fired when auth completes successfully */
-  onAuthSuccess?: () => void;      // 👈 add this
+  onAuthSuccess?: () => void; // <- optional callback (new)
 }
 
 export default function AuthModal({
   isOpen,
   onClose,
   mode = "signin",
-  onAuthSuccess,                   // 👈 accept it
+  onAuthSuccess,
 }: AuthModalProps) {
   if (!isOpen) return null;
 
   const handleSuccess = () => {
-    // ... your success logic (e.g., set session, redirect, etc.)
-    onAuthSuccess?.();             // 👈 call if provided
+    // TODO: your real success logic here
+    onAuthSuccess?.();
     onClose();
   };
 
@@ -33,9 +31,8 @@ export default function AuthModal({
           {mode === "signin" ? "Sign in" : "Create account"}
         </h2>
 
-        {/* your auth form goes here */}
-        {/* on successful auth, call handleSuccess() */}
-        <button className="mt-4 w-full rounded-md border px-3 py-2" onClick={handleSuccess}>
+        {/* Replace with your auth form; call handleSuccess() on success */}
+        <button className="mt-2 w-full rounded-md border px-3 py-2" onClick={handleSuccess}>
           Continue
         </button>
 
