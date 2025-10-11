@@ -5,7 +5,7 @@ import { signIn } from "next-auth/react";
 
 export default function LoginPage() {
   const handleLogin = useCallback(async () => {
-    await signIn("google"); // or your provider id
+    await signIn("google"); // use your provider id if different
   }, []);
 
   return (
