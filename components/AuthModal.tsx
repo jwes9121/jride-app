@@ -7,20 +7,20 @@ export interface AuthModalProps {
   isOpen: boolean;
   onClose: () => void;
   mode?: AuthMode;
-  onAuthSuccess?: () => void; // <- optional callback (new)
+  onAuthSuccess?: () => void; // <-- add this
 }
 
 export default function AuthModal({
   isOpen,
   onClose,
   mode = "signin",
-  onAuthSuccess,
+  onAuthSuccess, // <-- accept it
 }: AuthModalProps) {
   if (!isOpen) return null;
 
   const handleSuccess = () => {
-    // TODO: your real success logic here
-    onAuthSuccess?.();
+    // your real success logic here
+    onAuthSuccess?.(); // <-- call if provided
     onClose();
   };
 
