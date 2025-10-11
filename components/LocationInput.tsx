@@ -13,26 +13,18 @@ export type LocationInputProps = {
   label: string;
   value: string;
   placeholder?: string;
-  icon?: string;        // e.g. remix icon class
-  iconColor?: string;   // tailwind color name
-
-  /** Called when the user selects a concrete location (from suggestions or confirm) */
+  icon?: string;
+  iconColor?: string;
   onLocationSelect?: (location: GeoLocation) => void;
-
-  /** Called on text change while typing */
   onChange?: (value: string) => void;
-
-  /** Optional: disable manual typing; only allow selection from suggestions */
   readOnly?: boolean;
-
-  /** Optional: render a footer below suggestions (e.g., “powered by …”) */
   footer?: React.ReactNode;
 };
 
 export default function LocationInput({
   label,
   value,
-  placeholder = "Search address…",
+  placeholder = "Search address...",
   icon,
   iconColor = "gray",
   onLocationSelect,
@@ -44,7 +36,7 @@ export default function LocationInput({
   const [open, setOpen] = useState(false);
 
   const suggestions = useMemo(() => {
-    if (!query?.trim()) return [];
+    if (!query || !query.trim()) return [];
     return [{ address: query, lat: null, lng: null } as GeoLocation];
   }, [query]);
 
@@ -52,7 +44,7 @@ export default function LocationInput({
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const v = e.target.value;
       setQuery(v);
-      onChange?.(v);
+      if (onChange) onChange(v);
       setOpen(!!v);
     },
     [onChange]
@@ -62,7 +54,7 @@ export default function LocationInput({
     (loc: GeoLocation) => {
       setQuery(loc.address);
       setOpen(false);
-      onLocationSelect?.(loc);
+      if (onLocationSelect) onLocationSelect(loc);
     },
     [onLocationSelect]
   );
@@ -71,8 +63,7 @@ export default function LocationInput({
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === "Enter") {
         e.preventDefault();
-        const loc: GeoLocation = { address: query };
-        selectLocation(loc);
+        selectLocation({ address: query });
       }
     },
     [query, selectLocation]
@@ -80,9 +71,7 @@ export default function LocationInput({
 
   return (
     <div className="space-y-1">
-      <label className="block text-sm font-medium text-gray-700">
-        {label}
-      </label>
+      <label className="block text-sm font-medium text-gray-700">{label}</label>
 
       <div className="relative">
         <input
@@ -98,7 +87,13 @@ export default function LocationInput({
 
         {icon ? (
           <i
-            className={`absolute right-2 top-1/2 -translate-y-1/2 ${icon} text-${iconColor}-500`}
+            className={
+              "absolute right-2 top-1/2 -translate-y-1/2 " +
+              icon +
+              " text-" +
+              iconColor +
+              "-500"
+            }
             aria-hidden
           />
         ) : null}
@@ -111,7 +106,7 @@ export default function LocationInput({
                   key={i}
                   className="cursor-pointer px-3 py-2 hover:bg-gray-50"
                   onMouseDown={(e) => {
-                    e.preventDefault(); // keep input focus
+                    e.preventDefault();
                     selectLocation(s);
                   }}
                 >
@@ -120,7 +115,9 @@ export default function LocationInput({
               ))}
             </ul>
             {footer ? (
-              <div className="border-t px-3 py-2 text-xs text-gray-500">{footer}</div>
+              <div className="border-t px-3 py-2 text-xs text-gray-500">
+                {footer}
+              </div>
             ) : null}
           </div>
         )}
