@@ -1,11 +1,11 @@
-  "use client";
+"use client";
 
 import React from "react";
 import { signIn } from "next-auth/react";
 
 export default function SignInPage() {
   const handleSignIn = async () => {
-    await signIn("google"); // or your provider id
+    await signIn("google");
   };
 
   return (
