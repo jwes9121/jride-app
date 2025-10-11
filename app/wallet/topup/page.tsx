@@ -130,7 +130,7 @@ export default function TopupPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header title="Top Up Wallet" showBack onBack={() => router.back()} />
+      <Header title="Top Up Wallet" />
       
       <div className="pt-16 pb-20 px-4">
         <div className="max-w-md mx-auto space-y-6">
