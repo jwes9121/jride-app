@@ -1,19 +1,14 @@
+import Providers from "./providers";
 import "./globals.css";
-import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Jride App",
-  description: "Production build with Tailwind configured correctly"
-};
+export const metadata = { title: "Jride", description: "…" };
 
-export default function RootLayout({
-  children
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
