@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import LocationInput, {
-  type GeoLocation,
-} from "../../components/LocationInput"; // <- relative path, no alias confusion
+import LocationInput from "../../components/LocationInput";
+import type { GeoLocation } from "../../components/LocationInput";
 
 export default function SimpleBookRide() {
   const [pickup, setPickup] = useState<GeoLocation | null>(null);
@@ -36,8 +35,8 @@ export default function SimpleBookRide() {
 
         <div className="rounded border p-4 text-sm text-gray-600">
           <div className="mb-2 font-medium text-gray-800">Current selection</div>
-          <div>Pickup: {pickup?.address || "—"}</div>
-          <div>Dropoff: {dropoff?.address || "—"}</div>
+          <div>Pickup: {pickup?.address || "-"}</div>
+          <div>Dropoff: {dropoff?.address || "-"}</div>
         </div>
       </div>
     </div>
