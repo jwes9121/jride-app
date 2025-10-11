@@ -611,7 +611,7 @@ export default function TricycleRideSharePage() {
         </div>
       )}
 {/* Ride Share Confirmation Modal */}
-<RideShareConfirmationModal
+<(RideShareConfirmationModal as any)
   isOpen={showConfirmationModal}
   onClose={() => setShowConfirmationModal(false)}
   ride={selectedRide}
