@@ -4,10 +4,8 @@ import React, { useMemo } from "react";
 import dynamic from "next/dynamic";
 import type { LatLngExpression } from "leaflet";
 
-// Dynamically import our typed client wrapper (SSR disabled)
-const LeafletMap = dynamic(() => import("@/components/LeafletMap"), {
-  ssr: false,
-});
+// Import the typed client wrapper (dynamic to keep SSR off)
+const LeafletMap = dynamic(() => import("@/components/LeafletMap"), { ssr: false });
 
 export default function RequestPage() {
   const center = useMemo<LatLngExpression>(() => [16.807, 121.106], []);
@@ -24,7 +22,7 @@ export default function RequestPage() {
           markerAt={center}
           showPopupText="Center"
           whenCreated={(m) => {
-            // you can keep a ref to the Leaflet map if needed
+            // optional: keep a ref to the Leaflet map instance
             // console.log("Leaflet map created", m);
           }}
         />
