@@ -38,7 +38,6 @@ export default function Header({
               className="rounded p-2 hover:bg-gray-100"
             >
               <span className="sr-only">Back</span>
-              {/* Simple icon substitute */}
               ←
             </button>
           ) : null}
