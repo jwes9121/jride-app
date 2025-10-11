@@ -115,10 +115,16 @@ export default function CashOutPage() {
       const data = await response.json();
       
       if (data.success) {
-        // Update user balance
-        const updatedUser = { ...user, wallet_balance: data.new_balance };
-        setUser(updatedUser);
-        localStorage.setItem('j-ride-user', JSON.stringify(updatedUser));
+        // Update user balance safely (user is User | null)
+setUser((prev) => {
+  if (!prev) return prev; // nothing to update
+  const updated: typeof prev = { ...prev, wallet_balance: data.new_balance as number };
+  try {
+    localStorage.setItem('j-ride-user', JSON.stringify(updated));
+  } catch {}
+  return updated;
+});
+
         
         alert(`Emergency cash-out processed!\nGross: â‚±${data.gross_amount}\nService Fee: â‚±${data.service_fee}\nNet Amount: â‚±${data.net_amount}\nTransaction ID: ${data.transaction_id}`);
         
