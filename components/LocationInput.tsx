@@ -6,7 +6,6 @@ export type GeoLocation = {
   address: string;
   lat?: number | null;
   lng?: number | null;
-  // you can stash any provider payload here if you use Mapbox/Google
   raw?: any;
 };
 
@@ -16,21 +15,17 @@ export type LocationInputProps = {
   placeholder?: string;
   icon?: string;        // e.g. remix icon class
   iconColor?: string;   // tailwind color name
-  /**
-   * Called when the user selects a concrete location (from suggestions or confirm)
-   */
+
+  /** Called when the user selects a concrete location (from suggestions or confirm) */
   onLocationSelect?: (location: GeoLocation) => void;
-  /**
-   * Called on text change while typing
-   */
+
+  /** Called on text change while typing */
   onChange?: (value: string) => void;
-  /**
-   * Optional: disable manual typing; only allow selection from suggestions
-   */
+
+  /** Optional: disable manual typing; only allow selection from suggestions */
   readOnly?: boolean;
-  /**
-   * Optional: render a footer below suggestions (e.g., “powered by …”)
-   */
+
+  /** Optional: render a footer below suggestions (e.g., “powered by …”) */
   footer?: React.ReactNode;
 };
 
@@ -47,13 +42,10 @@ export default function LocationInput({
 }: LocationInputProps) {
   const [query, setQuery] = useState(value ?? "");
   const [open, setOpen] = useState(false);
+
   const suggestions = useMemo(() => {
-    // NOTE: replace with your Mapbox/Google results
-    // For now we just echo the typed query.
     if (!query?.trim()) return [];
-    return [
-      { address: query, lat: null, lng: null } as GeoLocation,
-    ];
+    return [{ address: query, lat: null, lng: null } as GeoLocation];
   }, [query]);
 
   const handleInput = useCallback(
@@ -119,8 +111,7 @@ export default function LocationInput({
                   key={i}
                   className="cursor-pointer px-3 py-2 hover:bg-gray-50"
                   onMouseDown={(e) => {
-                    // onMouseDown so input doesn’t lose focus before click fires
-                    e.preventDefault();
+                    e.preventDefault(); // keep input focus
                     selectLocation(s);
                   }}
                 >
@@ -128,7 +119,9 @@ export default function LocationInput({
                 </li>
               ))}
             </ul>
-            {footer ? <div className="border-t px-3 py-2 text-xs text-gray-500">{footer}</div> : null}
+            {footer ? (
+              <div className="border-t px-3 py-2 text-xs text-gray-500">{footer}</div>
+            ) : null}
           </div>
         )}
       </div>
