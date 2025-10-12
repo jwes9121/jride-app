@@ -5,9 +5,7 @@ import * as React from "react";
 type ButtonHTMLProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export type ButtonProps = ButtonHTMLProps & {
-  /** visual style */
   variant?: "default" | "outline" | "ghost" | "destructive" | "secondary";
-  /** size scale */
   size?: "sm" | "md" | "lg" | "icon";
 };
 
@@ -27,16 +25,7 @@ const sizeClasses: Record<NonNullable<ButtonProps["size"]>, string> = {
 };
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
-      className = "",
-      variant = "default",
-      size = "md",
-      type = "button",
-      ...props
-    },
-    ref
-  ) => {
+  ({ className = "", variant = "default", size = "md", type = "button", ...props }, ref) => {
     const v = variantClasses[variant] ?? variantClasses.default;
     const s = sizeClasses[size] ?? sizeClasses.md;
     return (
