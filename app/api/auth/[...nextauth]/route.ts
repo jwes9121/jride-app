@@ -10,7 +10,8 @@ export const authOptions: NextAuthOptions = {
   ],
   session: { strategy: "jwt" },
   secret: process.env.NEXTAUTH_SECRET,
-  debug: true, // keep on while diagnosing
+  debug: true, // keep on while fixing
+  // pages: { signIn: "/auth/signin" }, // only if you CREATED app/auth/signin/page.tsx
 };
 
 const handler = NextAuth(authOptions);
