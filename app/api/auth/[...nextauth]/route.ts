@@ -17,7 +17,6 @@ export const authOptions: NextAuthOptions = {
   session: { strategy: "jwt" },
   secret: reqEnv("NEXTAUTH_SECRET"),
   debug: true,
-  // Use our pretty pages below (App Router versions under app/auth/*)
   pages: {
     signIn: "/auth/signin",
     error: "/auth/error",
