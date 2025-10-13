@@ -1,8 +1,7 @@
 "use client";
-
 import { useSearchParams } from "next/navigation";
 
-const MESSAGES: Record<string, string> = {
+const MESSAGES: Record<string,string> = {
   OAuthSignin: "Problem constructing the provider URL.",
   OAuthCallback: "Provider callback failed. Check redirect URI and client credentials.",
   OAuthCreateAccount: "Could not create OAuth account.",
@@ -16,15 +15,13 @@ const MESSAGES: Record<string, string> = {
 };
 
 export default function AuthErrorPage() {
-  const params = useSearchParams();
-  const code = params.get("error") ?? "Default";
-  const message = MESSAGES[code] ?? MESSAGES.Default;
-
+  const code = useSearchParams().get("error") ?? "Default";
+  const msg = MESSAGES[code] ?? MESSAGES.Default;
   return (
-    <div style={{display:"grid",placeItems:"center",minHeight:"60vh",textAlign:"center", padding:"2rem"}}>
-      <h1 style={{fontSize:24, marginBottom:12}}>Sign-in error</h1>
-      <p style={{opacity:.85, marginBottom:20}}>{message}</p>
-      <a href="/auth/signin" style={{padding:"0.6rem 1rem", border:"1px solid #e5e7eb", borderRadius:10}}>
+    <div style={{display:"grid",placeItems:"center",minHeight:"60vh",textAlign:"center",padding:"2rem"}}>
+      <h1 style={{fontSize:24,marginBottom:12}}>Sign-in error</h1>
+      <p style={{opacity:.85,marginBottom:20}}>{msg}</p>
+      <a href="/auth/signin" style={{padding:"0.6rem 1rem",border:"1px solid #e5e7eb",borderRadius:10}}>
         Back to sign in
       </a>
     </div>
