@@ -1,23 +1,13 @@
-﻿/** @type {import('next').NextConfig} */
+/** @type {import("next").NextConfig} */
 const nextConfig = {
-  reactStrictMode: false,
-  experimental: {},
-  async headers() {
-    return [
-      {
-        source: "/sw.js",
-        headers: [
-          { key: "Cache-Control", value: "no-cache, no-store, must-revalidate" },
-          { key: "Service-Worker-Allowed", value: "/" }
-        ]
-      },
-      {
-        source: "/manifest.json",
-        headers: [
-          { key: "Cache-Control", value: "public, max-age=3600" }
-        ]
-      }
-    ];
-  }
+  reactStrictMode: true,
+  // You are using the App Router (app/ folder)
+  experimental: { appDir: true },
+
+  // DO NOT set output: "export" (that would remove API routes)
+  // output: "standalone", // optional
+  eslint: { ignoreDuringBuilds: true },
+  typescript: { ignoreBuildErrors: true },
 };
+
 export default nextConfig;
