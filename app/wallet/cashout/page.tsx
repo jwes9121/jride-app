@@ -1,3 +1,4 @@
+// app/wallet/cashout/page.tsx
 export default function CashoutDisabled() {
   return (
     <div style={{ padding: "2rem" }}>
@@ -6,3 +7,4 @@ export default function CashoutDisabled() {
     </div>
   );
 }
+
