@@ -1,6 +1,5 @@
-export default function MapClient({
-  height = 420,
-}: { height?: number | string }) {
+// components/MapClient.tsx
+export default function MapClient({ height = 420 }: { height?: number | string }) {
   return (
     <div
       style={{
