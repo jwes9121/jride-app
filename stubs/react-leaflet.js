@@ -1,14 +1,8 @@
-// Minimal no-op React components so imports succeed during build
 const React = require('react');
-
-function passthrough(tag) {
-  return function Component(props) {
-    const El = tag || 'div';
-    return React.createElement(El, props, props.children);
-  };
-}
-
-exports.MapContainer = passthrough('div');
-exports.TileLayer = passthrough('div');
-exports.Marker = passthrough('div');
-exports.Popup = passthrough('div');
+const P = tag => (props) => React.createElement(tag || 'div', props, props.children);
+exports.MapContainer = P('div');
+exports.TileLayer = P('div');
+exports.Marker = P('div');
+exports.Tooltip = P('div');
+exports.Popup = P('div');
+exports.useMap = () => ({});
