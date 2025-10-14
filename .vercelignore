@@ -1,3 +1,11 @@
-backup_*/
-**/*.bak
+# Exclude everything that references react-leaflet/leaflet
+components/DriverMap.client.tsx
+components/DriverMapCluster.client.tsx
+app/track/**
+
+# Any old backups/patches that contain their own app/ trees
+backup_*/**
+jride-app_patch/**
+
+# Safety: nested app folder if it ever appears again
 app/app/**
