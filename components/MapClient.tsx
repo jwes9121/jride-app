@@ -1,4 +1,3 @@
-// components/MapClient.tsx
 export default function MapClient({ height = 420 }: { height?: number | string }) {
   return (
     <div
@@ -12,9 +11,7 @@ export default function MapClient({ height = 420 }: { height?: number | string }
         background: "#f8fafc",
       }}
     >
-      <div style={{ opacity: 0.7 }}>
-        Map temporarily disabled for deployment
-      </div>
+      <div style={{ opacity: 0.7 }}>Map temporarily disabled for deployment</div>
     </div>
   );
 }
