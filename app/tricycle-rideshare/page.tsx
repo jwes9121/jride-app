@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import MapClient from "../../components/MapClient"; // app/../components
+import MapClient from "../../components/MapClient"; // app/tricycle-rideshare -> ../../components
 
 export const metadata: Metadata = { title: "Tricycle Rideshare · JRide" };
 
