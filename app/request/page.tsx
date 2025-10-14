@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import MapClient from "@/components/MapClient";
+import MapClient from "../components/MapClient"; // app/request -> ../components
 
 export const metadata: Metadata = { title: "Request · JRide" };
 
